@@ -1,0 +1,22 @@
+.boxed {
+  padding: 0;
+}
+
+#login {
+  min-height: 80vh;
+  background-image: url('../../../assets/images/clock.jpg');
+  display: flex;
+  align-items: center;
+
+  .login-content > div {
+    margin: 1.5rem 0;
+  }
+
+  img {
+    transform: scaleY(-1);
+  }
+}
+
+button[type='submit'] {
+  width: 100%;
+}

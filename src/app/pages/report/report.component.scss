@@ -1,0 +1,78 @@
+.header {
+  display: flex;
+
+  @media screen {
+    .content {
+      flex-grow: 1;
+    }
+  }
+  @media print {
+    .content {
+      margin-right: 500px;
+    }
+  }
+  .content:nth-child(2) {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+}
+
+#filter-form {
+  margin-bottom: 5em;
+}
+
+.form-group > button {
+  margin-top: 13px;
+}
+
+.export-header {
+  font-weight: bold;
+}
+
+.block > div > div:last-child {
+  padding-top: 2rem;
+}
+
+.export tr td:nth-child(1) {
+  width: 100px;
+}
+.export tr td:nth-child(2) {
+  width: 300px;
+}
+.export tr td:nth-child(3) {
+  width: 100px;
+}
+.export tr td:nth-child(4) {
+  width: 400px;
+}
+
+td,
+tr {
+  background-color: white;
+  border: none;
+}
+
+.export td {
+  padding: 5px 0px;
+}
+
+.plusminus {
+  position: absolute;
+  top: -12;
+  right: 10;
+}
+
+.input-wbutton {
+  position: relative;
+}
+
+.plusminus button {
+  padding: 2px 2px 2px 6px;
+  height: 2em;
+}
+
+@media print {
+  #filter-form {
+    display: none;
+  }
+}

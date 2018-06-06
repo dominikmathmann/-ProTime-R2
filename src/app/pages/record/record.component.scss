@@ -1,0 +1,24 @@
+.small-input {
+  max-width: 2rem;
+  font-size: x-small;
+  text-align: right;
+  margin: 0.2rem;
+}
+
+p-table + div {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+a {
+  color: blue;
+  cursor: pointer;
+}
+
+.ui-g button {
+  width: 100%;
+}
+
+.ui-button-text-only .ui-button-text {
+  padding: 0.25em 0em;
+}

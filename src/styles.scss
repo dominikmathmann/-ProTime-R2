@@ -1,0 +1,67 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import './_variables.scss';
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/bootswatch/dist/yeti/_bootswatch.scss';
+@import '../node_modules/bootswatch/dist/yeti/_variables.scss';
+
+body {
+  @include media-breakpoint-up(sm) {
+    padding-top: 4rem;
+  }
+}
+
+.boxed {
+  @media screen {
+    border: 1px solid $gray-600;
+    padding: $padding-medium;
+  }
+}
+
+label {
+  margin-bottom: 0rem;
+}
+
+input[type='checkbox'] {
+  transform: scale(1.5);
+  margin-top: 0.3rem;
+  margin-right: 0.5rem;
+}
+
+form.block {
+  &-fill {
+    input,
+    .input {
+      width: 100%;
+    }
+  }
+
+  label {
+    margin-bottom: 0.1em;
+  }
+
+  input ~ label {
+    margin-top: 1.2em;
+  }
+}
+
+// PrimeNG
+.ui-inputgroup .ui-inputgroup-addon-withCalendar {
+  margin-left: 2rem;
+  border: 0rem;
+  background-color: inherit;
+  color: #222222;
+  button.ui-button {
+    border-radius: 0px;
+    height: 2.1rem;
+    margin-top: -0.2rem;
+  }
+}
+
+.ui-calendar {
+  width: 90%;
+}
+
+.ui-accordion .ui-accordion-content {
+  padding-top: 0rem;
+}

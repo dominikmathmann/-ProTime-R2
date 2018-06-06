@@ -1,0 +1,19 @@
+<form (ngSubmit)="login(mail.value, pw.value)">
+  <div class="container">
+    <div class="row">
+      <div class="col-12" id="login">
+        <div class="login-content col-sm-12 col-md-4 offset-md-4">
+          <div>
+            <input type="email" class="form-control" id="inputMail" placeholder="enter Mail" name="mail" #mail>
+          </div>
+          <div>
+            <input type="password" class="form-control" id="pw" placeholder="enter Password" name="pw" #pw>
+          </div>
+          <div class="col-sm-12 col-md-4 offset-md-4">
+            <button type="submit" class="btn btn-primary">login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
