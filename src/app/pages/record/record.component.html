@@ -50,10 +50,10 @@
       <ng-template pTemplate="header">
         <tr>
           <th>project</th>
-          <th>description</th>
+          <th class="hide-small">description</th>
           <th>start</th>
           <th>end</th>
-          <th>time</th>
+          <th class="hide-small">time</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-itm>
@@ -61,10 +61,10 @@
           <td>
             <a (click)="record=itm">{{itm.project}}</a>
           </td>
-          <td>{{itm.description}}</td>
+          <td class="hide-small">{{itm.description}}</td>
           <td>{{itm.startTime}}</td>
           <td>{{itm.endTime}}</td>
-          <td>{{itm.getSecondsDiff() | timeToHours}}</td>
+          <td class="hide-small">{{itm.getSecondsDiff() | timeToHours}}</td>
         </tr>
       </ng-template>
     </p-table>
