@@ -12,6 +12,7 @@ import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { RecordService } from '../../services/record.service';
 import { TimeToHoursPipe } from '../../pipes/date.pipe';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-record',
@@ -36,7 +37,23 @@ export class RecordComponent implements OnInit {
 
   private recordReference;
 
-  constructor(private service: RecordService, public timeToHourConverter: TimeToHoursPipe) {}
+  constructor(
+    private service: RecordService,
+    public timeToHourConverter: TimeToHoursPipe,
+    private route: ActivatedRoute
+  ) {
+    let params = route.snapshot.queryParams;
+    if (params['project']) {
+      this.service.activeRecord.project = params['project'];
+    }
+    this.service.activeRecord.description = params['description'];
+    if ('startTime' in params && !params['startTime']) {
+      this.record.startTime = moment(new Date()).format(Record.DATE_MOMENT_FORMAT);
+    } else {
+      this.record.startTime = params['startTime'];
+      this.record.endTime = params['endTime'];
+    }
+  }
 
   ngOnInit() {
     this.loadData();
