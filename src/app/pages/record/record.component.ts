@@ -35,6 +35,10 @@ export class RecordComponent implements OnInit {
 
   pWeekInHours: string;
 
+  pMonth: number;
+
+  pMonthInHours: string;
+
   private recordReference;
 
   constructor(
@@ -92,7 +96,7 @@ export class RecordComponent implements OnInit {
     let activeTaskTime = 0;
     let sumday =
       itms
-        .filter(rec => moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isAfter(moment().hour(0)))
+        .filter(rec => moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isBetween(moment().hour(0), moment().hour(23)))
         .reduce((prev, current, i) => {
           return prev + current.getTimeDiff();
         }, 0) + activeTaskTime;
@@ -101,10 +105,13 @@ export class RecordComponent implements OnInit {
 
     let sumweek = itms
       .filter(rec =>
-        moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isAfter(
+        moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isBetween(
           moment()
             .hour(0)
-            .weekday(0)
+            .weekday(0),
+          moment()
+            .hour(23)
+            .weekday(6)
         )
       )
       .reduce((prev, current, i) => {
@@ -112,6 +119,23 @@ export class RecordComponent implements OnInit {
       }, 0);
     this.pWeek = Math.round((100 / 35) * sumweek);
     this.pWeekInHours = this.timeToHourConverter.transform((sumweek * 3600000).toString(), []);
+
+    let summonth = itms
+      .filter(rec =>
+        moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isBetween(
+          moment()
+            .hour(0)
+            .date(0),
+          moment()
+            .hour(23)
+            .date(31)
+        )
+      )
+      .reduce((prev, current, i) => {
+        return prev + current.getTimeDiff();
+      }, 0);
+    this.pMonth = Math.round((100 / (35 * 4)) * summonth);
+    this.pMonthInHours = this.timeToHourConverter.transform((summonth * 3600000).toString(), []);
   }
 
   setLimit(limit: string) {
