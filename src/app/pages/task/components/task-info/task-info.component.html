@@ -1,0 +1,13 @@
+<p-panel [toggleable]="true" [collapsed]="true">
+  <p-header [class.done]="task.done">
+    {{task.title}}
+    <a (click)="done.emit(task);" icon="fa fa-check-circle" class="ui-panel-titlebar-icon ui-panel-titlebar-toggler ui-corner-all ui-state-default">
+      <i class="fa fa-fw fa-check-circle" aria-hidden="true" *ngIf="!task.done"></i>
+      <i class="fa fa-fw fa-square-o" aria-hidden="true" *ngIf="task.done"></i>
+    </a>
+  </p-header>
+  {{task.description}}
+  <p-footer>
+    {{task.dueDate}}, created: {{task.creationDate}}
+  </p-footer>
+</p-panel>

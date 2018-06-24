@@ -11,14 +11,14 @@ import 'rxjs/add/observable/timer';
 import * as moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { RecordService } from '../../services/record.service';
-import { TimeToHoursPipe } from '../../pipes/date.pipe';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TimeToHoursPipe } from '../../pipes/date.pipe';
 
 @Component({
   selector: 'app-record',
   templateUrl: './record.component.html',
   styleUrls: ['./record.component.scss'],
-  providers: [TimeToHoursPipe]
+  providers: []
 })
 export class RecordComponent implements OnInit {
   public recordItems: Record[];

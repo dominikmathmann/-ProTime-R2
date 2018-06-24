@@ -8,7 +8,7 @@
       <label for="description">Description</label>
       <input pInputText type="text" name="description" id="description" [(ngModel)]="record.description" />
 
-      <label for="description">Start</label>
+      <label for="start">Start</label>
       <div class="ui-inputgroup">
         <p-calendar dataType="string" dateFormat="dd.mm.yy" showTime="true" [showOnFocus]="false" showIcon="true" name="start" [(ngModel)]="record.startTime"
           #calstart></p-calendar>
@@ -16,7 +16,7 @@
           <p-button icon="fa fa-play-circle" (click)="setNow('startTime', calstart)"></p-button>
         </span>
       </div>
-      <label for="description">End</label>
+      <label for="end">End</label>
       <div class="ui-inputgroup">
         <p-calendar dataType="string" dateFormat="dd.mm.yy" showTime="true" [showOnFocus]="false" showIcon="true" name="end" [(ngModel)]="record.endTime"
           #calend></p-calendar>

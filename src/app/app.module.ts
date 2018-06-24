@@ -18,6 +18,7 @@ import { LoginGuardService } from './services/login-guard.service';
 
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { AccordionModule } from 'primeng/accordion';
@@ -27,9 +28,20 @@ import { RecordService } from './services/record.service';
 import { GetValuesPipe } from './pipes/get-values.pipe';
 import { TimeToHoursPipe } from './pipes/date.pipe';
 import { HttpClientModule } from '@angular/common/http';
+import { TaskComponent } from './pages/task/task.component';
+import { TaskInfoComponent } from './pages/task/components/task-info/task-info.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ReportComponent, RecordComponent, GetValuesPipe, TimeToHoursPipe],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    ReportComponent,
+    RecordComponent,
+    GetValuesPipe,
+    TimeToHoursPipe,
+    TaskComponent,
+    TaskInfoComponent
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -44,9 +56,10 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     TableModule,
     ButtonModule,
-    TooltipModule
+    TooltipModule,
+    PanelModule
   ],
-  providers: [AngularFireAuth, LoginService, LoginGuardService, RecordService, GetValuesPipe],
+  providers: [AngularFireAuth, LoginService, LoginGuardService, RecordService, GetValuesPipe, TimeToHoursPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

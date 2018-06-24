@@ -1,0 +1,17 @@
+footer {
+  font-size: x-small;
+  font-style: italic;
+  margin-top: 1rem;
+  ::before {
+    content: '<hr>';
+  }
+}
+
+.buttons {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.done {
+  text-decoration: line-through;
+}

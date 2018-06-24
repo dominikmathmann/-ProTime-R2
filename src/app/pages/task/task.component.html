@@ -1,0 +1,33 @@
+<div class="ui-g">
+  <div class="ui-sm-12 ui-md-4">
+    <form class="block block-fill" (ngSubmit)="save()">
+
+      <label for="project">Title</label>
+      <input pInputText type="text" name="title" id="title" [(ngModel)]="task.title" />
+
+      <label for="description">Description</label>
+      <input pInputText type="text" name="description" id="description" [(ngModel)]="task.description" />
+
+      <label for="due">Due Date</label>
+      <div class="ui-inputgroup">
+        <p-calendar dataType="string" dateFormat="dd.mm.yy" showTime="false" [showOnFocus]="false" showIcon="true" name="start" [(ngModel)]="task.dueDate"
+          #calstart></p-calendar>
+        <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
+
+        </span>
+      </div>
+
+      <div class="ui-g">
+        <div class="ui-g-6">
+          <button pButton type="submit" label="save"></button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+  <div class="ui-sm-12 ui-md-8">
+    <app-task-info [task]="task" *ngFor="let task of tasks" (done)="toggleDone($event)">
+
+    </app-task-info>
+  </div>
+</div>
