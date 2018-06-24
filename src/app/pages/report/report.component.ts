@@ -37,9 +37,7 @@ export class ReportComponent implements AfterViewInit {
 
   doFilter() {
     const limitNumber = this.limit ? 1000 : -1;
-    const s = this.service.getLimitedRecordReference(-1).valueChanges();
-    this.records = null;
-    const sub = s.subscribe(r => {
+    this.service.getLimitedRecordReference(limitNumber).subscribe(r => {
       const activeFilter: Function[] = [];
       if (this.filter.from || this.filter.to) {
         const from = this.filter.from ? moment(this.filter.from, Record.DATE_MOMENT_FORMAT) : moment(0);
@@ -59,7 +57,6 @@ export class ReportComponent implements AfterViewInit {
       });
 
       this.summary = this.summarizeByDay(this.records);
-      sub.unsubscribe();
     });
   }
 

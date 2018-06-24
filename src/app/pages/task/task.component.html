@@ -1,3 +1,12 @@
+<p-dialog header="Please Confirm" [(visible)]="displayConfirm" [modal]="true" [width]="350" [baseZIndex]="10000">
+  <span>
+    <textarea placeholder="comment" cols=33 rows=7 #cmt></textarea>
+  </span>
+  <p-footer>
+    <button type="button" pButton (click)="task.finishComment=cmt.value;save()" label="save"></button>
+    <button type="button" pButton (click)="cancelConfirm()" label="cancel"></button>
+  </p-footer>
+</p-dialog>
 <div class="ui-g">
   <div class="ui-sm-12 ui-md-4">
     <form class="block block-fill" (ngSubmit)="save()">

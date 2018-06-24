@@ -8,18 +8,12 @@ import { LoginService } from './login.service';
 export class LoginGuardService implements CanActivate {
   constructor(public loginService: LoginService, public router: Router) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return Observable.create((observer: Observer<boolean>) => {
-      this.loginService.isLoggedIn().subscribe(alreadyLoggedIn => {
-        if (alreadyLoggedIn) {
-          observer.next(true);
-          observer.complete();
-        } else {
-          this.router.navigateByUrl('login');
-          observer.next(false);
-          observer.complete();
-        }
-      });
-    });
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    let loggedIn = this.loginService.isLoggedIn();
+    if (!loggedIn) {
+      this.router.navigateByUrl('login');
+    } else {
+      return true;
+    }
   }
 }

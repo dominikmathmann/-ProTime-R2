@@ -8,7 +8,7 @@ import { TimeToHoursPipe } from '../../pipes/date.pipe';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  providers: [LoginService]
+  providers: []
 })
 export class LoginComponent implements OnInit {
   constructor(public service: LoginService, public router: Router) {}
@@ -18,12 +18,10 @@ export class LoginComponent implements OnInit {
   login(usr: string, pw: string) {
     this.service.login(usr, pw).subscribe(
       loggedIn => {
-        this.service.isLoggedIn().subscribe(r => console.log('Logged: ' + r));
         this.router.navigateByUrl('record');
       },
       error => {
         alert('Login failed');
-        this.service.isLoggedIn().subscribe(r => console.log('Logged: ' + r));
       }
     );
   }

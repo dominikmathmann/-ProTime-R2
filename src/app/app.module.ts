@@ -1,19 +1,15 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { ReportComponent } from './pages/report/report.component';
 import { RecordComponent } from './pages/record/record.component';
-import { environment } from '../environments/environment';
 import { LoginService } from './services/login.service';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginGuardService } from './services/login-guard.service';
 
 import { CalendarModule } from 'primeng/calendar';
@@ -24,12 +20,21 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { AccordionModule } from 'primeng/accordion';
 import { TooltipModule } from 'primeng/tooltip';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { DialogModule } from 'primeng/dialog';
 import { RecordService } from './services/record.service';
 import { GetValuesPipe } from './pipes/get-values.pipe';
 import { TimeToHoursPipe } from './pipes/date.pipe';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { TaskComponent } from './pages/task/task.component';
 import { TaskInfoComponent } from './pages/task/components/task-info/task-info.component';
+import { HttpauthInterceptorService } from './services/httpauth-interceptor.service';
+
+export function loginFactory(loginService: LoginService) {
+  console.log('IniFactory');
+  return () => {
+    return loginService.init();
+  };
+}
 
 @NgModule({
   declarations: [
@@ -47,8 +52,6 @@ import { TaskInfoComponent } from './pages/task/components/task-info/task-info.c
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFireDatabaseModule,
     CalendarModule,
     TriStateCheckboxModule,
     AccordionModule,
@@ -57,9 +60,27 @@ import { TaskInfoComponent } from './pages/task/components/task-info/task-info.c
     TableModule,
     ButtonModule,
     TooltipModule,
-    PanelModule
+    PanelModule,
+    DialogModule
   ],
-  providers: [AngularFireAuth, LoginService, LoginGuardService, RecordService, GetValuesPipe, TimeToHoursPipe],
+  providers: [
+    LoginService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: loginFactory,
+      deps: [LoginService],
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpauthInterceptorService,
+      multi: true
+    },
+    LoginGuardService,
+    RecordService,
+    GetValuesPipe,
+    TimeToHoursPipe
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

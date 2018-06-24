@@ -9,23 +9,17 @@ import { Task } from '../../models/TaskModels';
   providers: [TaskService]
 })
 export class TaskComponent implements OnInit {
-  private tasksReference;
-
   public tasks: Task[];
 
   public task: Task = new Task();
 
-  private keyMap = new Map<any, any>();
+  public displayConfirm = false;
 
   constructor(private taskService: TaskService) {}
 
   ngOnInit() {
-    this.tasksReference = this.taskService.getLimitedRecordReference(100);
-    this.keyMap = new Map();
-    this.tasksReference.snapshotChanges().subscribe(e => {
-      e.map(changes => this.keyMap.set(changes.payload.val().id, changes.payload.key));
-      this.tasks = e.map(changes => changes.payload.val()).map(changes => Object.assign(new Task(), changes));
-      // this.tasks.reverse();
+    this.taskService.getLimitedRecordReference(100).subscribe(r => {
+      this.tasks = r;
       this.tasks.sort((a, b) => {
         if (a.done) return 1;
         if (b.done) return -1;
@@ -38,13 +32,22 @@ export class TaskComponent implements OnInit {
   }
 
   save() {
-    this.task.id = new Date().getTime().toString();
-    this.tasksReference.push(this.task);
-    this.task = new Task();
+    this.displayConfirm = false;
+    this.taskService.writeRecord(this.task).subscribe(r => {
+      this.task = new Task();
+      this.ngOnInit();
+    });
   }
 
   toggleDone(task: Task) {
     task.setDone(!task.done);
-    this.tasksReference.set(this.keyMap.get(task.id), task);
+    this.task = task;
+    this.displayConfirm = true;
+  }
+
+  cancelConfirm() {
+    this.task.setDone(!this.task.done);
+    this.task = new Task();
+    this.displayConfirm = false;
   }
 }

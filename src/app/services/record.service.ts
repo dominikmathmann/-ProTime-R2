@@ -1,16 +1,37 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Record } from '../models/RecordingModels';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
+import { LoginService } from './login.service';
+import { BaseFireService } from './firebase-baseservice';
+
+import 'rxjs/add/operator/map';
 
 @Injectable()
-export class RecordService {
+export class RecordService extends BaseFireService {
   public activeRecord: Record = new Record();
 
-  constructor(public db: AngularFireDatabase, public usr: AngularFireAuth) {}
+  constructor(private http: HttpClient, private loginService: LoginService) {
+    super();
+  }
 
-  getLimitedRecordReference(recordLimit: number) {
-    const refMethod = recordLimit && recordLimit !== -1 ? ref => ref.limitToFirst(recordLimit) : ref => ref;
-    return this.db.list<Record>(`/userdata2/${this.usr.auth.currentUser.uid}/record`, ref => refMethod(ref));
+  getLimitedRecordReference(recordLimit: number): Observable<Record[]> {
+    return this.http.get(`${environment.baseurl}${this.loginService.loginInformation.localId}/record.json`).map(e =>
+      this.mapFromFirebase(e, () => {
+        return new Record();
+      })
+    );
+  }
+
+  writeRecord(record: Record): Observable<any> {
+    if (!record.id) {
+      return this.http.post(`${environment.baseurl}${this.loginService.loginInformation.localId}/record.json`, record);
+    } else {
+      return this.http.put(
+        `${environment.baseurl}${this.loginService.loginInformation.localId}/record/${record.id}.json`,
+        record
+      );
+    }
   }
 }

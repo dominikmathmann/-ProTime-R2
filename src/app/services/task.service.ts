@@ -1,14 +1,35 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Task } from '../models/TaskModels';
+import { BaseFireService } from './firebase-baseservice';
+import { HttpClient } from '@angular/common/http';
+import { LoginService } from './login.service';
+import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment.prod';
+
+import 'rxjs/add/operator/map';
 
 @Injectable()
-export class TaskService {
-  constructor(public db: AngularFireDatabase, public usr: AngularFireAuth) {}
+export class TaskService extends BaseFireService {
+  constructor(private http: HttpClient, private loginService: LoginService) {
+    super();
+  }
 
-  getLimitedRecordReference(recordLimit: number): AngularFireList<Task> {
-    const refMethod = recordLimit && recordLimit !== -1 ? ref => ref.limitToFirst(recordLimit) : ref => ref;
-    return this.db.list<Task>(`/userdata2/${this.usr.auth.currentUser.uid}/task`, ref => refMethod(ref));
+  getLimitedRecordReference(recordLimit: number): Observable<Task[]> {
+    return this.http.get(`${environment.baseurl}${this.loginService.loginInformation.localId}/task.json`).map(e =>
+      this.mapFromFirebase(e, () => {
+        return new Task();
+      })
+    );
+  }
+
+  writeRecord(record: Task): Observable<any> {
+    if (!record.id) {
+      return this.http.post(`${environment.baseurl}${this.loginService.loginInformation.localId}/task.json`, record);
+    } else {
+      return this.http.put(
+        `${environment.baseurl}${this.loginService.loginInformation.localId}/task/${record.id}.json`,
+        record
+      );
+    }
   }
 }

@@ -1,15 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Record } from '../../models/RecordingModels';
 import { Calendar } from 'primeng/calendar';
-import { FirebaseDatabase } from '@firebase/database-types';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { AngularFireAuth } from 'angularfire2/auth';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/observable/timer';
 
 import * as moment from 'moment';
-import { HttpClient } from '@angular/common/http';
 import { RecordService } from '../../services/record.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TimeToHoursPipe } from '../../pipes/date.pipe';
@@ -25,8 +21,6 @@ export class RecordComponent implements OnInit {
 
   public recordLimit = 100;
 
-  private keyMap = new Map<any, any>();
-
   pDay: number;
 
   pDayInHours: string;
@@ -38,8 +32,6 @@ export class RecordComponent implements OnInit {
   pMonth: number;
 
   pMonthInHours: string;
-
-  private recordReference;
 
   constructor(
     private service: RecordService,
@@ -81,13 +73,8 @@ export class RecordComponent implements OnInit {
   }
 
   loadData() {
-    this.recordReference = this.service.getLimitedRecordReference(this.recordLimit);
-
-    this.keyMap = new Map();
-    this.recordReference.snapshotChanges().subscribe(e => {
-      e.map(changes => this.keyMap.set(changes.payload.val().id, changes.payload.key));
-      this.recordItems = e.map(changes => changes.payload.val()).map(changes => Object.assign(new Record(), changes));
-      this.recordItems.reverse();
+    this.service.getLimitedRecordReference(this.recordLimit).subscribe(r => {
+      this.recordItems = r.reverse();
       this.updateProgress(this.recordItems);
     });
   }
@@ -144,24 +131,20 @@ export class RecordComponent implements OnInit {
   }
 
   save(init = true) {
-    if (this.record.id) {
-      this.recordReference.set(this.keyMap.get(this.record.id), this.record);
-    } else {
-      this.record.id = new Date().getTime().toString();
-      this.recordReference.push(this.record);
-    }
-
-    if (init) this.init();
+    this.service.writeRecord(this.record).subscribe(r => {
+      if (init) this.init();
+    });
+    // if (this.record.id) {
+    //   this.recordReference.set(this.keyMap.get(this.record.id), this.record);
+    // } else {
+    //   this.record.id = new Date().getTime().toString();
+    //   this.recordReference.push(this.record);
+    // }
   }
 
   init() {
-    if (this.record) {
-      this.record.id = null;
-      this.record.startTime = null;
-      this.record.endTime = null;
-    } else {
-      this.record = new Record();
-    }
+    this.record = new Record();
+    this.loadData();
   }
 
   setNow(field: string, inputField: Calendar) {
