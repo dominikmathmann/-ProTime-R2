@@ -44,7 +44,7 @@ export class TaskComponent implements OnInit {
   }
 
   toggleDone(task: Task) {
-    task.done = !task.done;
+    task.setDone(!task.done);
     this.tasksReference.set(this.keyMap.get(task.id), task);
   }
 }

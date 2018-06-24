@@ -8,6 +8,9 @@
   </p-header>
   {{task.description}}
   <p-footer>
-    {{task.dueDate}}, created: {{task.creationDate}}
+    {{task.dueDate?'due: ' + task.dueDate+', ':''}} created: {{task.creationDate}} {{task.finishDate?', finished: ' + task.finishDate:''}}
+    <div *ngIf="task.finishComment">
+      {{task.finishComment}}
+    </div>
   </p-footer>
 </p-panel>

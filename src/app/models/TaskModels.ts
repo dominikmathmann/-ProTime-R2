@@ -12,6 +12,15 @@ export class Task {
   finishDate: string;
   finishComment: string;
 
+  setDone(d: boolean) {
+    this.done = d;
+    if (this.done) this.finishDate = moment(new Date()).format(Task.DATE_MOMENT_FORMAT);
+    else {
+      this.finishDate = null;
+      this.finishComment = null;
+    }
+  }
+
   constructor() {
     this.creationDate = moment(new Date()).format(Task.DATE_MOMENT_FORMAT);
   }
