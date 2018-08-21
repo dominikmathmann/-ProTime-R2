@@ -1,7 +1,7 @@
 export class Record {
   static readonly DATE_MOMENT_FORMAT = 'DD.MM.YYYY HH:mm';
 
-  constructor(public project = 'gedoplan, intern', public description = '') {}
+  constructor(public project = '', public description = '') {}
 
   startTime: string;
   endTime: string;

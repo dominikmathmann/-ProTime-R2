@@ -30,7 +30,6 @@ import { TaskInfoComponent } from './pages/task/components/task-info/task-info.c
 import { HttpauthInterceptorService } from './services/httpauth-interceptor.service';
 
 export function loginFactory(loginService: LoginService) {
-  console.log('IniFactory');
   return () => {
     return loginService.init();
   };

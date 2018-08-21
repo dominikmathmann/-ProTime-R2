@@ -38,16 +38,18 @@ export class RecordComponent implements OnInit {
     public timeToHourConverter: TimeToHoursPipe,
     private route: ActivatedRoute
   ) {
-    let params = route.snapshot.queryParams;
-    if (params['project']) {
-      this.service.activeRecord.project = params['project'];
-    }
-    this.service.activeRecord.description = params['description'];
-    if ('startTime' in params && !params['startTime']) {
-      this.record.startTime = moment(new Date()).format(Record.DATE_MOMENT_FORMAT);
-    } else {
-      this.record.startTime = params['startTime'];
-      this.record.endTime = params['endTime'];
+    if (!this.service.activeRecord) {
+      let params = route.snapshot.queryParams;
+      if (params['project']) {
+        this.service.activeRecord.project = params['project'];
+        this.service.activeRecord.description = params['description'];
+        if ('startTime' in params && !params['startTime']) {
+          this.record.startTime = moment(new Date()).format(Record.DATE_MOMENT_FORMAT);
+        } else {
+          this.record.startTime = params['startTime'];
+          this.record.endTime = params['endTime'];
+        }
+      }
     }
   }
 
@@ -75,6 +77,10 @@ export class RecordComponent implements OnInit {
   loadData() {
     this.service.getLimitedRecordReference(this.recordLimit).subscribe(r => {
       this.recordItems = r.reverse();
+      if (this.recordItems && !this.service.activeRecord.project) {
+        let last = this.recordItems[0];
+        this.service.activeRecord = new Record(last.project, last.description);
+      }
       this.updateProgress(this.recordItems);
     });
   }
@@ -133,6 +139,10 @@ export class RecordComponent implements OnInit {
   save(init = true) {
     this.service.writeRecord(this.record).subscribe(r => {
       if (init) this.init();
+      else {
+        if (r.name) this.record.id = r.name;
+        else this.record = r;
+      }
     });
     // if (this.record.id) {
     //   this.recordReference.set(this.keyMap.get(this.record.id), this.record);

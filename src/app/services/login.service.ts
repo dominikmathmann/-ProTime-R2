@@ -42,7 +42,7 @@ export class LoginService {
   }
 
   constructor(private http: HttpClient) {
-    Observable.interval(300 * 1000).subscribe(i => {
+    Observable.interval(300000).subscribe(i => {
       this.refresh().subscribe(r => {});
     });
   }
@@ -76,7 +76,7 @@ export class LoginService {
       })
       .do((r: any) => {
         this.loginInformation.idToken = r.access_token;
-        this.loginInformation.refreshToken = r.refreshToken;
+        this.loginInformation.refreshToken = r.refresh_token;
         this.loginInformation.expiresIn = r.expiresIn;
         this.storeLoginInformation();
       });
