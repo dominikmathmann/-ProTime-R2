@@ -40,7 +40,7 @@ export class ReportComponent implements AfterViewInit {
     this.service.getLimitedRecordReference(limitNumber).subscribe(r => {
       const activeFilter: Function[] = [];
       if (this.filter.from || this.filter.to) {
-        const from = this.filter.from ? moment(this.filter.from, Record.DATE_MOMENT_FORMAT) : moment(0);
+        const from = this.filter.from ? moment(this.filter.from, Record.DATE_MOMENT_FORMAT).hour(1) : moment(0);
         const to = this.filter.to ? moment(this.filter.to, Record.DATE_MOMENT_FORMAT).hour(23) : moment(10000000000000);
 
         activeFilter.push((rec: Record) => moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isBetween(from, to));
