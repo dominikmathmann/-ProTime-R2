@@ -94,7 +94,7 @@ export class ReportComponent implements AfterViewInit {
 
     records.forEach(r => {
       const dayString = moment(r.startTime, Record.DATE_MOMENT_FORMAT).format('DD.MM.YYYY');
-      const projectString = r.project;
+      const projectString = !r.halfTime ? r.project : r.project + ' [Fahrzeit]';
 
       if (!summary.has(dayString)) {
         summary.set(dayString, new Map<string, RecordSummary>());
