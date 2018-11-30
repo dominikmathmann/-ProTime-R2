@@ -1,55 +1,67 @@
 <div id="filter-form">
   <form class="block block-fill" (ngSubmit)="doFilter()">
     <div class="ui-g">
+      <div class="ui-g-12">
+        <p-checkbox [(ngModel)]="limit" binary="true" label="limit output" name="limit"></p-checkbox>
+        <p-checkbox
+          [(ngModel)]="withoutHalfTimes"
+          binary="true"
+          label="ohne Fahrzeiten"
+          name="withHalfTimes"
+        ></p-checkbox>
+      </div>
       <div class="ui-sm-12 ui-md-3">
         <label for="project">project</label>
-        <input pInputText type="text" name="project" [(ngModel)]="filter.project">
+        <input pInputText type="text" name="project" [(ngModel)]="filter.project" />
       </div>
 
       <div class="ui-sm-12 ui-md-3">
         <label for="from">start</label>
-        <p-calendar [(ngModel)]="filter.from" dataType="string" dateFormat="dd.mm.yy" [showOnFocus]="false" showIcon="true" name="start"
-          #calstart></p-calendar>
+        <p-calendar
+          [(ngModel)]="filter.from"
+          dataType="string"
+          dateFormat="dd.mm.yy"
+          [showOnFocus]="false"
+          showIcon="true"
+          name="start"
+          #calstart
+        ></p-calendar>
       </div>
 
       <div class="ui-sm-12 ui-md-3">
         <label for="to">end</label>
-        <p-calendar [(ngModel)]="filter.to" dataType="string" dateFormat="dd.mm.yy" [showOnFocus]="false" showIcon="true" name="end"
-          #calend></p-calendar>
+        <p-calendar
+          [(ngModel)]="filter.to"
+          dataType="string"
+          dateFormat="dd.mm.yy"
+          [showOnFocus]="false"
+          showIcon="true"
+          name="end"
+          #calend
+        ></p-calendar>
       </div>
 
-      <div class="ui-sm-12 ui-md-3">
-        <button pButton type="submit" label="filter"></button>
-        <p-triStateCheckbox [(ngModel)]="limit" label="limit output" name="limit"></p-triStateCheckbox>
-      </div>
+      <div class="ui-sm-12 ui-md-3"><button pButton type="submit" label="filter"></button></div>
     </div>
   </form>
 </div>
 
-<h2> Tätigkeitsnachweis </h2>
+<h2>Tätigkeitsnachweis</h2>
 <div class="header">
   <div class="content">
-    <div contentEditable="true">
-      <br> Kunde:
-      <br>
-      <div contentEditable="true">
-        <b>...</b>
-      </div>
+    <div contenteditable="true">
+      <br />
+      Kunde: <br />
+      <div contenteditable="true"><b>...</b></div>
     </div>
   </div>
   <div class="content">
     <div>
+      <div><img src="./assets/images/gedo.png" alt="gedoplan" width="300" /></div>
+      <br />
       <div>
-        <img src="./assets/images/gedo.png" alt="gedoplan" width="300">
-      </div>
-      <br/>
-      <div>GEDOPLAN GmbH
-        <br>Stieghorster Straße 60
-        <br>33605 Bielefeld
-        <br>
-        <br>Tel.: 0521 / 2088910
-        <br>Fax.: 0521 / 2088945
-        <br>
+        GEDOPLAN GmbH <br />Stieghorster Straße 60 <br />33605 Bielefeld <br />
+        <br />Tel.: 0521 / 2088910 <br />Fax.: 0521 / 2088945 <br />
       </div>
     </div>
   </div>
@@ -65,42 +77,41 @@
         <td>Tätigkeit</td>
       </tr>
     </table>
-    <table *ngFor="let day of summary | getValues" class="export">
-      <tr *ngFor=" let record of day.val | getValues ">
-        <td>{{day.key}}</td>
-        <td>{{record.key}}</td>
-        <td>{{record.val.sum | timeToHours}}</td>
-        <td>{{record.val.getDescription()}}</td>
+
+    <table *ngFor="let day of (summary | getValues)" class="export">
+      <tr *ngFor="let record of (day.val | getValues)">
+        <td>{{ day.key }}</td>
+        <td>{{ record.key }}</td>
+        <td>{{ record.val.sum | timeToHours }}</td>
+        <td>{{ record.val.getDescription() }}</td>
       </tr>
       <tr>
         <td></td>
         <td></td>
         <td>
-          <b>{{getDaySum(day.key) | timeToHours}}</b>
+          <b>{{ getDaySum(day.key) | timeToHours }}</b>
         </td>
         <td></td>
       </tr>
       <tr>
-        <td colspan="4 ">
-          <hr style="border-color: black; " />
-        </td>
+        <td colspan="4 "><hr style="border-color: black; " /></td>
       </tr>
     </table>
-
 
     <table class="export">
       <tr>
         <td></td>
         <td></td>
         <td>
-          <b>{{getOverallSum() | timeToHours}}</b>
+          <b>{{ getOverallSum() | timeToHours }}</b>
         </td>
         <td></td>
       </tr>
     </table>
   </div>
 </div>
-<br/>
-<br/> Ort,Datum / Unterschrift
-<br>
-<br> _______________________________________________________
+<br />
+<br />
+Ort,Datum / Unterschrift <br />
+<br />
+_______________________________________________________

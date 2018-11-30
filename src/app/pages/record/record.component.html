@@ -1,35 +1,71 @@
 <div class="ui-g">
   <div class="ui-sm-12 ui-md-4">
     <form class="block block-fill" (ngSubmit)="save()">
-
       <label for="project">Project</label>
       <input pInputText type="text" name="project" id="project" [(ngModel)]="record.project" />
 
       <label for="description">Description</label>
-      <input pInputText type="text" name="description" id="description" [(ngModel)]="record.description" />
+      <input
+        pInputText
+        type="text"
+        name="description"
+        id="description"
+        [(ngModel)]="record.description"
+        #fdescription
+      />
 
       <label for="start">Start</label>
       <div class="ui-inputgroup">
-        <p-calendar dataType="string" dateFormat="dd.mm.yy" showTime="true" [showOnFocus]="false" showIcon="true" name="start" [(ngModel)]="record.startTime"
-          #calstart></p-calendar>
+        <p-calendar
+          dataType="string"
+          dateFormat="dd.mm.yy"
+          showTime="true"
+          [showOnFocus]="false"
+          showIcon="true"
+          name="start"
+          [(ngModel)]="record.startTime"
+          #calstart
+        ></p-calendar>
         <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
           <p-button icon="fa fa-play-circle" (click)="setNow('startTime', calstart)"></p-button>
         </span>
       </div>
       <label for="end">End</label>
       <div class="ui-inputgroup">
-        <p-calendar dataType="string" dateFormat="dd.mm.yy" showTime="true" [showOnFocus]="false" showIcon="true" name="end" [(ngModel)]="record.endTime"
-          #calend></p-calendar>
+        <p-calendar
+          dataType="string"
+          dateFormat="dd.mm.yy"
+          showTime="true"
+          [showOnFocus]="false"
+          showIcon="true"
+          name="end"
+          [(ngModel)]="record.endTime"
+          #calend
+        ></p-calendar>
         <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
           <p-button icon="fa fa-play-circle" (click)="setNow('endTime', calend)"></p-button>
         </span>
       </div>
+      <label for="half">Fahrzeit</label>
+      <p-checkbox
+        binary="true"
+        name="halftime"
+        id="half"
+        [(ngModel)]="record.halfTime"
+        (onChange)="halfTimeChanged()"
+        #fhalftime
+      ></p-checkbox>
+
       <div class="ui-g">
-        <div class="ui-g-3">
-          <button pButton type="submit" [label]="record.id?'update':'save'"></button>
-        </div>
+        <div class="ui-g-3"><button pButton type="submit" [label]="record.id ? 'update' : 'save'"></button></div>
         <div class="ui-g-6">
-          <button pButton type="submit" label="save as new" (click)="record.id=null;save();" *ngIf="record.id"></button>
+          <button
+            pButton
+            type="submit"
+            label="save as new"
+            (click)="record.id = null; save()"
+            *ngIf="record.id"
+          ></button>
         </div>
         <div class="ui-g-3">
           <button pButton type="submit" label="cancel" (click)="init()" *ngIf="record.id"></button>
@@ -61,18 +97,25 @@
       <ng-template pTemplate="body" let-itm>
         <tr>
           <td>
-            <a (click)="record=itm">{{itm.project}}</a>
+            <a (click)="record = itm">{{ itm.project }}</a>
           </td>
-          <td class="hide-small">{{itm.description}}</td>
-          <td>{{itm.startTime}}</td>
-          <td>{{itm.endTime}}</td>
-          <td class="hide-small">{{itm.getSecondsDiff() | timeToHours}}</td>
+          <td class="hide-small">{{ itm.description }}</td>
+          <td>{{ itm.startTime }}</td>
+          <td>{{ itm.endTime }}</td>
+          <td class="hide-small">{{ itm.getSecondsDiff() | timeToHours }}</td>
         </tr>
       </ng-template>
     </p-table>
 
     <div>
-      <input pInputText id="limit" class="small-input" [value]="recordLimit" (blur)="setLimit(limitIn.value)" #limitIn/>
+      <input
+        pInputText
+        id="limit"
+        class="small-input"
+        [value]="recordLimit"
+        (blur)="setLimit(limitIn.value)"
+        #limitIn
+      />
       <label for="limit">limit</label>
     </div>
   </div>

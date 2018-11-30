@@ -31,6 +31,8 @@ export class ReportComponent implements AfterViewInit {
 
   limit = true;
 
+  withoutHalfTimes = true;
+
   ngAfterViewInit() {
     this.doFilter();
   }
@@ -44,6 +46,10 @@ export class ReportComponent implements AfterViewInit {
         const to = this.filter.to ? moment(this.filter.to, Record.DATE_MOMENT_FORMAT).hour(23) : moment(10000000000000);
 
         activeFilter.push((rec: Record) => moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isBetween(from, to));
+      }
+
+      if (this.withoutHalfTimes) {
+        activeFilter.push((rec: Record) => !rec.halfTime);
       }
 
       if (this.filter.project) {

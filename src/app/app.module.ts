@@ -20,6 +20,8 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { AccordionModule } from 'primeng/accordion';
 import { TooltipModule } from 'primeng/tooltip';
 import { TriStateCheckboxModule } from 'primeng/tristatecheckbox';
+import { CheckboxModule } from 'primeng/checkbox';
+
 import { DialogModule } from 'primeng/dialog';
 import { RecordService } from './services/record.service';
 import { GetValuesPipe } from './pipes/get-values.pipe';
@@ -54,6 +56,7 @@ export function loginFactory(loginService: LoginService) {
     CalendarModule,
     TriStateCheckboxModule,
     AccordionModule,
+    CheckboxModule,
     ProgressBarModule,
     HttpClientModule,
     TableModule,

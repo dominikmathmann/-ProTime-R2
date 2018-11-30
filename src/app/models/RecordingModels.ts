@@ -6,6 +6,7 @@ export class Record {
   startTime: string;
   endTime: string;
   id: string;
+  halfTime: boolean = false;
 
   getStartTime(): moment.Moment {
     return this.parseDate(this.startTime);
@@ -15,10 +16,18 @@ export class Record {
   }
 
   public getTimeDiff() {
-    return moment.duration(this.getEndTime().diff(this.getStartTime())).asHours();
+    let diff = this.getEndTime().diff(this.getStartTime());
+    if (this.halfTime) {
+      diff = diff / 2;
+    }
+    return moment.duration(diff).asHours();
   }
   public getSecondsDiff() {
-    return moment.duration(this.getEndTime().diff(this.getStartTime()));
+    let diff = this.getEndTime().diff(this.getStartTime());
+    if (this.halfTime) {
+      diff = diff / 2;
+    }
+    return moment.duration(diff);
   }
 
   private parseDate(field): moment.Moment {
@@ -45,7 +54,9 @@ export class RecordSummary {
       start.setMilliseconds(0);
       end.setSeconds(0);
       end.setMilliseconds(0);
-      this.sum = this.sum + end.getTime() - start.getTime();
+      let diff = end.getTime() - start.getTime();
+      if (r.halfTime) diff = diff / 2;
+      this.sum = this.sum + diff;
     }
     // this.sum = r.endTime && r.startTime ?this.sum + r.endTime - r.startTime:this.sum;
     this.descriptions.push(r.description);

@@ -160,4 +160,10 @@ export class RecordComponent implements OnInit {
   setNow(field: string, inputField: Calendar) {
     this.record[field] = moment().format(Record.DATE_MOMENT_FORMAT);
   }
+
+  halfTimeChanged() {
+    if (this.record.halfTime) {
+      this.record.description = 'Fahrzeit';
+    }
+  }
 }
