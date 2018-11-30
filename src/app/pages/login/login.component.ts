@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../../services/login.service';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Router } from '@angular/router';
-import { TimeToHoursPipe } from '../../pipes/date.pipe';
 
 @Component({
   selector: 'app-login',

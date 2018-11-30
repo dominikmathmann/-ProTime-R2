@@ -1,8 +1,6 @@
 import { Component, OnInit, AfterViewChecked, AfterViewInit } from '@angular/core';
 import * as moment from 'moment';
 import { Record, RecordSummary, Filter } from '../../models/RecordingModels';
-import { AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { RecordService } from '../../services/record.service';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Observer } from 'rxjs/Observer';
+import { Observable, interval } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import 'rxjs/add/observable/fromPromise';
 import 'rxjs/add/observable/throw';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
@@ -42,7 +42,7 @@ export class LoginService {
   }
 
   constructor(private http: HttpClient) {
-    Observable.interval(300000).subscribe(i => {
+    interval(300000).subscribe(i => {
       this.refresh().subscribe(r => {});
     });
   }
@@ -54,14 +54,16 @@ export class LoginService {
         password: password,
         returnSecureToken: true
       })
-      .do(
-        (r: any) => {
-          this.loginInformation = r;
-          this.storeLoginInformation();
-        },
-        (error: any) => {
-          this.logout();
-        }
+      .pipe(
+        tap(
+          (r: any) => {
+            this.loginInformation = r;
+            this.storeLoginInformation();
+          },
+          (error: any) => {
+            this.logout();
+          }
+        )
       );
   }
 
@@ -74,12 +76,14 @@ export class LoginService {
       .post(`${LoginService.REFRESH_URL}key=${environment.apikey}`, body.toString(), {
         headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
       })
-      .do((r: any) => {
-        this.loginInformation.idToken = r.access_token;
-        this.loginInformation.refreshToken = r.refresh_token;
-        this.loginInformation.expiresIn = r.expiresIn;
-        this.storeLoginInformation();
-      });
+      .pipe(
+        tap((r: any) => {
+          this.loginInformation.idToken = r.access_token;
+          this.loginInformation.refreshToken = r.refresh_token;
+          this.loginInformation.expiresIn = r.expiresIn;
+          this.storeLoginInformation();
+        })
+      );
   }
 
   logout(): any {

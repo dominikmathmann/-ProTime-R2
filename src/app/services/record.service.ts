@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Record } from '../models/RecordingModels';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { LoginService } from './login.service';
 import { BaseFireService } from './firebase-baseservice';
@@ -17,10 +18,12 @@ export class RecordService extends BaseFireService {
   }
 
   getLimitedRecordReference(recordLimit: number): Observable<Record[]> {
-    return this.http.get(`${environment.baseurl}${this.loginService.loginInformation.localId}/record.json`).map(e =>
-      this.mapFromFirebase(e, () => {
-        return new Record();
-      })
+    return this.http.get(`${environment.baseurl}${this.loginService.loginInformation.localId}/record.json`).pipe(
+      map(e =>
+        this.mapFromFirebase(e, () => {
+          return new Record();
+        })
+      )
     );
   }
 

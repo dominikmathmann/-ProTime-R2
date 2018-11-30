@@ -3,7 +3,8 @@ import { Task } from '../models/TaskModels';
 import { BaseFireService } from './firebase-baseservice';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment.prod';
 
 import 'rxjs/add/operator/map';
@@ -15,10 +16,12 @@ export class TaskService extends BaseFireService {
   }
 
   getLimitedRecordReference(recordLimit: number): Observable<Task[]> {
-    return this.http.get(`${environment.baseurl}${this.loginService.loginInformation.localId}/task.json`).map(e =>
-      this.mapFromFirebase(e, () => {
-        return new Task();
-      })
+    return this.http.get(`${environment.baseurl}${this.loginService.loginInformation.localId}/task.json`).pipe(
+      map(e =>
+        this.mapFromFirebase(e, () => {
+          return new Task();
+        })
+      )
     );
   }
 

@@ -1,9 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Record } from '../../models/RecordingModels';
 import { Calendar } from 'primeng/calendar';
-import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/do';
-import 'rxjs/add/observable/timer';
+import { Observable, timer } from 'rxjs';
 
 import * as moment from 'moment';
 import { RecordService } from '../../services/record.service';
@@ -58,7 +56,7 @@ export class RecordComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    Observable.timer(1800000, 600000).subscribe(t => {
+    timer(1800000, 600000).subscribe(t => {
       if (this.record.startTime) {
         this.record.endTime = moment(new Date()).format(Record.DATE_MOMENT_FORMAT);
         this.save(false);

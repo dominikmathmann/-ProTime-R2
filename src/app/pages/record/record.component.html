@@ -27,7 +27,7 @@
           #calstart
         ></p-calendar>
         <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
-          <p-button icon="fa fa-play-circle" (click)="setNow('startTime', calstart)"></p-button>
+          <p-button type="button" icon="fa fa-play-circle" (click)="setNow('startTime', calstart)"></p-button>
         </span>
       </div>
       <label for="end">End</label>
@@ -37,13 +37,13 @@
           dateFormat="dd.mm.yy"
           showTime="true"
           [showOnFocus]="false"
-          showIcon="true"
+          [showIcon]="true"
           name="end"
           [(ngModel)]="record.endTime"
           #calend
         ></p-calendar>
         <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
-          <p-button icon="fa fa-play-circle" (click)="setNow('endTime', calend)"></p-button>
+          <p-button type="button" icon="fa fa-play-circle" (click)="setNow('endTime', calend)"></p-button>
         </span>
       </div>
       <label for="half">Fahrzeit</label>
@@ -120,3 +120,4 @@
     </div>
   </div>
 </div>
+<p-calendar [showIcon]="true"></p-calendar>
