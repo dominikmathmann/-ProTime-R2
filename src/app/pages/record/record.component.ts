@@ -116,7 +116,7 @@ export class RecordComponent implements OnInit {
         moment(rec.startTime, Record.DATE_MOMENT_FORMAT).isBetween(
           moment()
             .hour(0)
-            .date(0),
+            .date(1),
           moment()
             .hour(23)
             .date(31)

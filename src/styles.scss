@@ -34,6 +34,12 @@ form.block {
     .input {
       width: 100%;
     }
+
+    p-calendar {
+      input {
+        width: 80%;
+      }
+    }
   }
 
   label {
@@ -45,21 +51,9 @@ form.block {
   }
 }
 
-// PrimeNG
-.ui-inputgroup .ui-inputgroup-addon-withCalendar {
-  margin-left: 2rem;
-  border: 0rem;
-  background-color: inherit;
-  color: #222222;
-  button.ui-button {
-    border-radius: 0px;
-    height: 2.1rem;
-    margin-top: -0.2rem;
-  }
-}
-
-.ui-calendar {
-  width: 90%;
+.ui-button-icon-only .ui-button-text,
+.ui-button-text-empty .ui-button-text {
+  padding: 0.46em;
 }
 
 .ui-accordion .ui-accordion-content {

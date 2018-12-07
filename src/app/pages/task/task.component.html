@@ -1,16 +1,13 @@
 <p-dialog header="Please Confirm" [(visible)]="displayConfirm" [modal]="true" [width]="400" [baseZIndex]="10000">
-  <span>
-    <textarea placeholder="comment" cols=33 rows=7 #cmt></textarea>
-  </span>
+  <span> <textarea placeholder="comment" cols="33" rows="7" #cmt></textarea> </span>
   <p-footer>
-    <button type="button" pButton (click)="task.finishComment=cmt.value;save()" label="save"></button>
+    <button type="button" pButton (click)="task.finishComment = cmt.value; save()" label="save"></button>
     <button type="button" pButton (click)="cancelConfirm()" label="cancel"></button>
   </p-footer>
 </p-dialog>
 <div class="ui-g">
   <div class="ui-sm-12 ui-md-4">
     <form class="block block-fill" (ngSubmit)="save()">
-
       <label for="project">Title</label>
       <input pInputText type="text" name="title" id="title" [(ngModel)]="task.title" />
 
@@ -19,24 +16,24 @@
 
       <label for="due">Due Date</label>
       <div class="ui-inputgroup">
-        <p-calendar dataType="string" dateFormat="dd.mm.yy" showTime="false" [showOnFocus]="false" showIcon="true" name="start" [(ngModel)]="task.dueDate"
-          #calstart></p-calendar>
-        <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
-
-        </span>
+        <p-calendar
+          dataType="string"
+          dateFormat="dd.mm.yy"
+          showTime="false"
+          [showOnFocus]="false"
+          showIcon="true"
+          name="start"
+          [(ngModel)]="task.dueDate"
+          #calstart
+        ></p-calendar>
       </div>
 
       <div class="ui-g">
-        <div class="ui-g-6">
-          <button pButton type="submit" label="save"></button>
-        </div>
+        <div class="ui-g-6"><button pButton type="submit" label="save"></button></div>
       </div>
     </form>
-
   </div>
   <div class="ui-sm-12 ui-md-8">
-    <app-task-info [task]="task" *ngFor="let task of tasks" (done)="toggleDone($event)">
-
-    </app-task-info>
+    <app-task-info [task]="task" *ngFor="let task of tasks" (done)="toggleDone($event)"> </app-task-info>
   </div>
 </div>

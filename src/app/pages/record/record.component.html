@@ -15,23 +15,22 @@
       />
 
       <label for="start">Start</label>
-      <div class="ui-inputgroup">
+      <div>
         <p-calendar
           dataType="string"
           dateFormat="dd.mm.yy"
           showTime="true"
           [showOnFocus]="false"
-          showIcon="true"
+          [showIcon]="true"
           name="start"
           [(ngModel)]="record.startTime"
           #calstart
         ></p-calendar>
-        <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
-          <p-button type="button" icon="fa fa-play-circle" (click)="setNow('startTime', calstart)"></p-button>
-        </span>
+
+        <p-button type="button" icon="pi pi-chevron-circle-left" (click)="setNow('startTime', calstart)"></p-button>
       </div>
       <label for="end">End</label>
-      <div class="ui-inputgroup">
+      <div>
         <p-calendar
           dataType="string"
           dateFormat="dd.mm.yy"
@@ -42,9 +41,8 @@
           [(ngModel)]="record.endTime"
           #calend
         ></p-calendar>
-        <span class="ui-inputgroup-addon ui-inputgroup-addon-withCalendar">
-          <p-button type="button" icon="fa fa-play-circle" (click)="setNow('endTime', calend)"></p-button>
-        </span>
+
+        <p-button type="button" icon="pi pi-chevron-circle-left" (click)="setNow('endTime', calend)"></p-button>
       </div>
       <label for="half">Fahrzeit</label>
       <p-checkbox
@@ -120,4 +118,3 @@
     </div>
   </div>
 </div>
-<p-calendar [showIcon]="true"></p-calendar>
